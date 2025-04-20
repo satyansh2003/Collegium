@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+  
+  <% if(success.length>0){%>
+    <div id="flashMessage" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 ">
+      <span class="inline-block mt-1 mb-1 text-white">
+          <%= success %>
+      </span>
+  </div>
+  <%} %>
+
+  <% if(error.length>0){%>
+    <div id="flashMessageError" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 ">
+      <span class="inline-block mt-1 mb-1 text-white">
+          <%= error %>
+      </span>
+  </div>
+  <%} %>
+
+
+<div class="bg-[#111827]">
+    <%- include('./partials/headers.ejs') %>
+    <h2 class="text-2xl font-bold tracking-tight text-white translate-x-1/2 m-4">shop</h2>
+    <!-- <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"> -->
+        
+  
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 w-full translate-x-4">
+       
+        <% products.forEach((product)=>{ %>
+          <div  class="group relative block overflow-hidden rounded-lg bg-[#0d9488]  ">
+            <button onclick="window.location.href = '/products/wishlist/<%=product._id %>'"
+            class="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75 z-99">
+            <% if(user.wishlist.indexOf(product._id)==-1){ %>
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+           <% }else{ %>
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="red"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
+          <% } %>
+            
+            </button>
+          
+            <a href="/products/details/<%= product._id %>">
+              <img
+              src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+              alt=""
+              class=" object-cover  transition duration-500 group-hover:scale-105 sm:h-64"
+            />
+            </a>
+            
+          
+            <div class="relative   bg-[#5eead4] p-6">
+          
+              <h3 class="mt-4 text-lg font-medium text-gray-900"><%= product.productname %>  </h3>
+          
+              <p class="mt-1.5 text-sm text-gray-700">price: $<%= product.price   %></p>
+              <p class="mt-1.5 text-sm text-gray-700">discount price: $<%= product.discount %> </p>
+          
+              <form class="mt-4" method="post" action="/products/cart/<%= product._id %>">
+                <input type="submit" value="add to cart" class="block w-full rounded bg-[#0d9488] p-4 text-sm font-medium transition hover:scale-105">
+              </form>
+            </div>
+          </div>
+       <% }) %>
+        
+  
+        <!-- More products... -->
+      </div>
+    </div>
+  </div>
+  
+
+  <script>
+    // Function to hide flash messages with fade-out effect
+    function hideFlashMessage(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style.transition = 'opacity 0.5s ease'; // Set transition effect
+            element.style.opacity = '0'; // Start fading out
+            setTimeout(() => {
+                element.style.display = 'none'; // Remove from view after fade
+            }, 500); // Delay matches the transition duration
+        }
+    }
+
+    // Trigger the hide function after 4 seconds for both messages
+    setTimeout(() => hideFlashMessage('flashMessage'), 2000);
+    setTimeout(() => hideFlashMessage('flashMessageError'), 2000);
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wishlist</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <% if(success.length > 0) { %>
+    <div id="flashMessage" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+      <span class="inline-block mt-1 mb-1 text-white">
+        <%= success %>
+      </span>
+    </div>
+  <% } %>
+
+  <%- include('./partials/headers.ejs') %>
+
+  <div class="main-content font-sans max-w-5xl max-md:max-w-xl mx-auto bg-white py-4">
+    <h1 class="text-3xl font-bold text-gray-800 text-center">Wishlist</h1>
+
+    <div class="grid md:grid-cols-3 gap-8 mt-16">
+      <div class="md:col-span-2 space-y-4">
+        <% user.wishlist.forEach((product) => { %>
+          <div class="grid grid-cols-3 items-start gap-4">
+            <div class="col-span-2 flex items-start gap-4">
+              <div class="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0 bg-gray-100 p-2 rounded-md">
+                <img src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" class="w-full h-full object-contain" />
+              </div>
+
+              <div class="flex flex-col">
+                <h3 class="text-base font-bold text-gray-800"><%= product.productname %></h3>
+                <p class="text-xs font-semibold text-gray-500 mt-0.5">Size: MD</p>
+
+                <button type="button" onclick="window.location.href='/users/wishlist/remove/<%= product._id %>'" class="mt-6 font-semibold text-red-500 text-xs flex items-center gap-1 shrink-0 inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current inline" viewBox="0 0 24 24">
+                    <path d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"></path>
+                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"></path>
+                  </svg>
+                  REMOVE
+                </button>
+              </div>
+            </div>
+
+            <div class="ml-auto">
+              <h4 class="text-lg max-sm:text-base font-bold text-gray-800">$<%= product.price %></h4>
+              <h4 class="text-lg max-sm:text-base font-bold text-gray-800">$<%= product.discount %></h4>
+              <form action="/products/cart/<%= product._id %>" method="post">
+                <input type="submit" value="Add to Cart" class="bg-blue-600 rounded-md text-white w-28 p-2 text-sm font-semibold hover:bg-blue-700 transition" />
+              </form>
+            </div>
+          </div>
+
+          <hr class="border-gray-300" />
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/footer.ejs') %>
+
+  <script>
+    // Function to hide flash messages with fade-out effect
+    function hideFlashMessage(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.style.transition = 'opacity 0.5s ease';
+        element.style.opacity = '0';
+        setTimeout(() => {
+          element.style.display = 'none';
+        }, 500);
+      }
+    }
+
+    setTimeout(() => hideFlashMessage('flashMessage'), 2000);
+    setTimeout(() => hideFlashMessage('flashMessageError'), 2000);
+  </script>
+</body>
+</html>

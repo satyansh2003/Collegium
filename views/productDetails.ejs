@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <%- include('./partials/headers.ejs') %>
+   
+
+    <!--
+  Heads up! 👋
+
+  Plugins:
+    - @tailwindcss/forms
+-->
+
+<section class="relative flex flex-wrap lg:h-screen lg:items-center">
+    <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2 bg-white">
+      <img
+        alt=""
+        src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+        class="absolute inset-0 h-2/3 object-contain w-full self-center rounded-lg hover:scale-105"
+      />
+    </div>
+
+    <div class="w-full h-full px-2 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24 bg-white">
+        <div class="mx-auto max-w-lg text-center">
+          <h1 class="text-2xl font-bold sm:text-3xl mb-4"> Product Description </h1>
+          
+
+          <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">Product Name</dt>
+            <dd class="text-gray-700 sm:col-span-2"> <%= product.productname %> </dd>
+          </div>
+      
+          <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">Price</dt>
+            <dd class="text-gray-700 sm:col-span-2">Rs <%= product.price %>  </dd>
+          </div>
+
+          <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">Discounted Price</dt>
+            <dd class="text-gray-700 sm:col-span-2">Rs <%= product.discount %>  </dd>
+          </div>
+      
+          <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">Owner</dt>
+            <dd class="text-gray-700 sm:col-span-2">@<%= product.owner.username %> </dd>
+            <dt class="font-medium text-gray-900">Phone Number</dt>
+            <dd class="text-gray-700 sm:col-span-2"><%= product.owner.phoneNumber %> </dd>
+
+          </div>
+
+
+          <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">details</dt>
+            <dd class="text-gray-700 sm:col-span-2">
+              <%= product.description %>
+            </dd>
+          </div>
+
+        </dl>
+      </div>
+
+      <a 
+  href="https://wa.me/<%= product.owner.phoneNumber %>?text=Hi%20I%20am%20interested%20in%20your%20product%20%22<%= product.productname %>%22"
+  class="text-green-600 underline hover:text-green-800"
+  target="_blank"
+>
+  WhatsApp the Owner
+</a>
+
+
+     <form action="/products/cart/<%= product._id %>" method="post">
+      <input type="submit" class="w-full bg-blue-500 h-[60px] rounded-full hover:bg-blue-600" value="add to cart">
+     </form>
+     
+
+        </div>
+      </div>
+
+
+  </section>
+
+  <%- include('./partials/footer.ejs')  %>
+
+</body>
+</html>

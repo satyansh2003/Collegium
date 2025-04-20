@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+
+  <% if(success.length>0){%>
+    <div id="flashMessage" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 ">
+      <span class="inline-block mt-1 mb-1 text-white">
+          <%= success %>
+      </span>
+  </div>
+  <%} %>
+
+  <% if(error.length>0){%>
+    <div id="flashMessageError" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 ">
+      <span class="inline-block mt-1 mb-1 text-white">
+          <%= error %>
+      </span>
+  </div>
+  <%} %>
+
+    <%- include('./partials/headers.ejs',{isLogged}) %>
+    <section class="bg-gray-900 text-white">
+        <div class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
+          <div class="mx-auto max-w-3xl text-center">
+            <h1
+              class="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl"
+            >
+            Your Campus, Your Marketplace.
+      
+              <span class="sm:block"> Connect. Commerce. Campus </span>
+            </h1>
+      
+            <p class="mx-auto mt-4 max-w-xl sm:text-xl/relaxed">
+              The Easiest Way to Buy and Sell on Campus.
+            </p>
+      
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+              <a
+                class="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
+                href="/login"
+              >
+                Get Started
+              </a>
+      
+              <a
+                class="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"
+                href="/learnMore"
+              >
+                Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%- include('./partials/footer.ejs')  %>
+
+      
+    <!-- JavaScript to Hide Flash Messages -->
+    <script>
+      // Function to hide flash messages with fade-out effect
+      function hideFlashMessage(elementId) {
+          const element = document.getElementById(elementId);
+          if (element) {
+              element.style.transition = 'opacity 0.5s ease'; // Set transition effect
+              element.style.opacity = '0'; // Start fading out
+              setTimeout(() => {
+                  element.style.display = 'none'; // Remove from view after fade
+              }, 500); // Delay matches the transition duration
+          }
+      }
+
+      // Trigger the hide function after 4 seconds for both messages
+      setTimeout(() => hideFlashMessage('flashMessage'), 2000);
+      setTimeout(() => hideFlashMessage('flashMessageError'), 2000);
+  </script>
+   
+</body>
+
+
+</html>

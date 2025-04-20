@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Products</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-content bg-[#111827]">
+    <%- include('./partials/headers.ejs') %>
+
+    <h2 class="text-2xl font-bold tracking-tight text-white translate-x-1/2 m-4">Your Products</h2>
+
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 w-full translate-x-4">
+      <% user.products.forEach((product) => { %>
+        <div class="group relative block overflow-hidden rounded-md bg-[#0d9488]">
+          <a href="/products/details/<%= product._id %>">
+            <img
+              src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+              alt=""
+              class="object-cover transition duration-500 group-hover:scale-105 sm:h-64"
+            />
+          </a>
+
+          <div class="relative bg-[#5eead4] p-6">
+            <h3 class="mt-4 text-lg font-medium text-gray-900"><%= product.productname %></h3>
+            <p class="mt-1.5 text-sm text-gray-700">Price: $<%= product.price %></p>
+            <p class="mt-1.5 text-sm text-gray-700">Discount Price: $<%= product.discount %></p>
+            <p class="mt-1.5 text-sm text-gray-700"><%= product.description %></p>
+
+            <form class="mt-4" method="post" action="/users/product/delete/<%= product._id %>">
+              <input type="submit" value="Delete" class="block w-full rounded bg-[#0d9488] p-4 text-sm font-medium transition hover:scale-105">
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <%- include('./partials/footer.ejs') %>
+
+</body>
+</html>

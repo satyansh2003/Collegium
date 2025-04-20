@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <% if(error.length>0){%>
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500 ">
+          <span class="inline-block mt-1 mb-1 text-white">
+              <%= error %>
+          </span>
+      </div>
+      <%} %>
+
+
+      <div class="min-h-screen flex flex-col ">
+        <div class="container px-10 py-20 flex flex-grow">
+            <main class="w-3/4 bg-white p-8 shadow ml-4">
+                <h2 class="text-xl font-bold mb-4">Update Profile</h2>
+                <form autocomplete="off" action="/users/profile/update" method="post" enctype="multipart/form-data">
+                    <div class="mb-6">
+                        
+                        <div class="mb-4">
+                            <label class="block mb-2 font-medium">Image</label>
+                            <input name="image" type="file" class="py-2 px-4 rounded" value="Select File">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <input name="phoneNumber" type="number" placeholder="Phone Number"
+                                class="border p-2 rounded w-full">
+                            <input name="Year" type="number" placeholder="Year"
+                                class="border p-2 rounded w-full">
+                            
+                        </div>
+                        <h4 class="mt-4">About Yourself</h4>
+                        <textarea name="about" class="mt-2 resize-none bg-transparent border-2 border-zinc-800 rounded-md w-3/4 p-2 outline-none block" placeholder="About You"></textarea>
+                    </div>
+
+                    
+                    <input class="px-5 py-2 rounded mt-3 bg-blue-500 text-white" type="submit"
+                        value="Update Profile">
+                </form>
+            </main>
+        </div>
+    </div>
+
+   
+
+
+</body>
+</html>
