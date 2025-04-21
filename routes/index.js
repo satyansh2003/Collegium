@@ -5,20 +5,33 @@ const userModel = require("../models/user-model");
 const router = express.Router();
 
 
-router.get("/",(req,res)=>{
-    let success= req.flash("success");
+const jwt = require("jsonwebtoken");
+// const userModel = require("../models/user"); // make sure this path is correct
+const JWT_SECRET = "your_secret_key"; // use environment variable in production
+
+router.get("/", async (req, res) => {
+    let success = req.flash("success");
     let error = req.flash("error");
-    let isLogged=false;
-    if(!req.cookies.token){
-        return res.render("index",{success,error,isLogged});
+    let isLogged = false;
+    let user = null;
+
+    if (!req.cookies.token) {
+        return res.render("index", { success, error, isLogged, user });
     }
-    isLogged=true;
-    const findEle=(id)=>{
-        let ob= document.querySelector('#id');
-        console.log(ob);
+
+    try {
+        const decoded = jwt.verify(req.cookies.token, JWT_SECRET);
+        user = await userModel.findOne({ email: decoded.email });
+        isLogged = true;
+    } catch (err) {
+        console.error("Token verification failed:", err);
+        // Optional: Clear the token if it's invalid
+        res.clearCookie("token");
     }
-    res.render("index",{success,error,findEle,isLogged});
-})
+
+    return res.render("index", { success, error, isLogged, user });
+});
+
 
 router.get("/learnMore",(req,res)=>{
     let isLogged=false;

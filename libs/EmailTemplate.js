@@ -78,8 +78,6 @@ module.exports.Verification_Email_Template = `
 `;
 
 
-
-
 module.exports.Welcome_Email_Template = `
   <!DOCTYPE html>
   <html lang="en">

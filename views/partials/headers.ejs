@@ -55,14 +55,7 @@
                     </a>
                   </li>
       
-                  <li>
-                    <a
-                      class="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                      href="/users/profile"
-                    >
-                      Profile
-                    </a>
-                  </li>
+                 
       
                   <li>
                     <a
@@ -119,7 +112,12 @@
                 </div>
 
                 <% if(user){ %>
-                  <h1 class="text-white"><%=user.username%></h1>
+                  <a
+                      class="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                      href="/users/profile"
+                    >
+                      <%=user.username%>
+                    </a>
                <% } %>
                 
 
